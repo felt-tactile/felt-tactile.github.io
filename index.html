@@ -52,6 +52,15 @@
 </section>
 
 
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline controls width="100%">
+        <source src="./static/videos/felt_video_web.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
 
 
 <section class="section">
@@ -60,6 +69,20 @@
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
+        <figure class="teaser-figure">
+          <img src="./static/images/Teaser%20v7.jpg"
+               alt="FELT overview showing RGB observations and generated per-finger tactile pressure images.">
+          <!-- <figcaption class="content has-text-justified">
+            <p>
+              Our method, FELT, synthesizes per-finger tactile pressure images from fisheye RGB
+              observations collected with a dual-finger gripper. After training on existing paired
+              visuo-tactile data, FELT can augment vision-only demonstrations with generated tactile
+              channels and provide tactile data online during policy execution. This enables
+              visuo-tactile policy learning for contact-rich manipulation tasks without requiring
+              physical tactile sensors at test time.
+            </p>
+          </figcaption> -->
+        </figure>
         <div class="content has-text-justified">
           <p>
             The sense of touch is central to manipulation, especially when vision is occluded or ambiguous. 
@@ -81,10 +104,135 @@
             policy success over vision-only baselines. 
           </p>
         </div>
+        
       </div>
     </div>
     <!--/ Abstract. -->
 
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <figure class="method-figure">
+          <img src="./static/images/Method%20v2.jpg"
+               alt="FELT tactile data generation framework with visual feature extraction, tactile query decoding, and panel-aware readout.">
+          <figcaption class="content has-text-justified">
+            <p>
+              Our tactile data generation framework. (a) Given fisheye RGB images,
+              our model extracts visual features with a frozen DINOv2 ViT. (b) The tactile query decoder
+              low pressure uses separate learnable, position-aware query embeddings for the left and right
+              finger sensors. Each branch attends to the visual features via cross-attention and exchanges
+              information via gated cross-panel connection. (c) A panel-aware convolutional readout head
+              maps the decoded queries to tactile features, with learned side embeddings to distinguish
+              the left and right sensors. The tactile features predict contact probability and pressure
+              intensity for each tactile grid. (d) These generated tactile signals and features can augment
+              real visuo-tactile demonstrations for downstream policy learning.
+            </p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <!--/ Method. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Tactile Prediction Results. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Tactile Prediction Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            We compare the predicted tactile images from FELT with ground-truth in our xArm test dataset.
+          </p>
+        </div>
+        <div class="prediction-video-carousel" aria-label="Tactile prediction result videos">
+          <button class="prediction-carousel-button prediction-carousel-prev"
+                  type="button"
+                  aria-label="Show previous tactile prediction video">
+            <span aria-hidden="true">&lsaquo;</span>
+          </button>
+          <div class="prediction-video-stage">
+            <div class="prediction-panel-labels" aria-hidden="true">
+              <span>Visual Observation Input</span>
+              <span>Ground-Truth Tactile</span>
+              <span>FELT Output</span>
+            </div>
+            <video class="prediction-video is-active" autoplay muted loop playsinline controls>
+              <source src="./static/videos/test_video/episode_1.mp4" type="video/mp4">
+            </video>
+            <video class="prediction-video" muted loop playsinline controls>
+              <source src="./static/videos/test_video/episode_14.mp4" type="video/mp4">
+            </video>
+            <video class="prediction-video" muted loop playsinline controls>
+              <source src="./static/videos/test_video/episode_24.mp4" type="video/mp4">
+            </video>
+            <video class="prediction-video" muted loop playsinline controls>
+              <source src="./static/videos/test_video/episode_26.mp4" type="video/mp4">
+            </video>
+          </div>
+          <button class="prediction-carousel-button prediction-carousel-next"
+                  type="button"
+                  aria-label="Show next tactile prediction video">
+            <span aria-hidden="true">&rsaquo;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--/ Tactile Prediction Results. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Downstream Sensor-free Deployment. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Downstream Sensor-free Deployment</h2>
+        <div class="content has-text-justified">
+          <p>
+            Policies trained with RGB and real tactile data, but deployed with FELT-generated tactile
+            images in place of the physical sensor reading.
+          </p>
+        </div>
+        <div class="deployment-task-grid">
+          <article class="deployment-task">
+            <h3 class="title is-5">Tube Insertion</h3>
+            <video autoplay muted loop playsinline controls>
+              <source src="./static/videos/tube_orientation_insertion/tube_insertion_web.mp4" type="video/mp4">
+            </video>
+          </article>
+          <article class="deployment-task">
+            <h3 class="title is-5">Cup Nesting</h3>
+            <video autoplay muted loop playsinline controls>
+              <source src="./static/videos/cup_stacking/cup_nesting_web.mp4" type="video/mp4">
+            </video>
+          </article>
+          <article class="deployment-task">
+            <h3 class="title is-5">Eraser Wiping</h3>
+            <video autoplay muted loop playsinline controls>
+              <source src="./static/videos/word_erasing/eraser_wiping_web.mp4" type="video/mp4">
+            </video>
+          </article>
+          <article class="deployment-task">
+            <h3 class="title is-5">Triangle Peg Insertion</h3>
+            <video autoplay muted loop playsinline controls>
+              <source src="./static/videos/triangle_insertion/triangle_peg_insertion_web.mp4" type="video/mp4">
+            </video>
+          </article>
+        </div>
+      </div>
+    </div>
+    <!--/ Downstream Sensor-free Deployment. -->
+  </div>
 </section>
 
 

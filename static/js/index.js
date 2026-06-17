@@ -19,6 +19,35 @@ function setInterpolationImage(i) {
   $('#interpolation-image-wrapper').empty().append(image);
 }
 
+function initializePredictionCarousel() {
+  var carousel = document.querySelector('.prediction-video-carousel');
+  if (!carousel) {
+    return;
+  }
+
+  var videos = Array.prototype.slice.call(carousel.querySelectorAll('.prediction-video'));
+  var prevButton = carousel.querySelector('.prediction-carousel-prev');
+  var nextButton = carousel.querySelector('.prediction-carousel-next');
+  var activeIndex = 0;
+
+  function showVideo(nextIndex) {
+    videos[activeIndex].classList.remove('is-active');
+    videos[activeIndex].pause();
+
+    activeIndex = (nextIndex + videos.length) % videos.length;
+    videos[activeIndex].classList.add('is-active');
+    videos[activeIndex].play().catch(function() {});
+  }
+
+  prevButton.addEventListener('click', function() {
+    showVideo(activeIndex - 1);
+  });
+
+  nextButton.addEventListener('click', function() {
+    showVideo(activeIndex + 1);
+  });
+}
+
 
 $(document).ready(function() {
     // Check for click events on the navbar burger icon
@@ -72,6 +101,8 @@ $(document).ready(function() {
     });
     setInterpolationImage(0);
     $('#interpolation-slider').prop('max', NUM_INTERP_FRAMES - 1);
+
+    initializePredictionCarousel();
 
     bulmaSlider.attach();
 

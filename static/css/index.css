@@ -27,6 +27,139 @@ body {
   font-family: 'Google Sans', sans-serif;
 }
 
+.teaser-figure {
+  margin-top: 2rem;
+}
+
+.teaser-figure img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.teaser-figure figcaption {
+  margin-top: 1rem;
+}
+
+.method-figure {
+  margin-top: 2rem;
+}
+
+.method-figure img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.method-figure figcaption {
+  margin-top: 1rem;
+}
+
+.prediction-video-carousel {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) 3.5rem;
+  gap: 1rem;
+  margin-left: -4.5rem;
+  margin-top: 1.5rem;
+  width: calc(100% + 9rem);
+}
+
+.prediction-video-stage {
+  position: relative;
+}
+
+.prediction-panel-labels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.prediction-video {
+  display: none;
+  width: 100%;
+  border-radius: 6px;
+  background: #000;
+}
+
+.prediction-video.is-active {
+  display: block;
+}
+
+.prediction-carousel-button {
+  align-items: center;
+  aspect-ratio: 1;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 999px;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-size: 2.25rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+
+.prediction-carousel-button span {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  transform: translateY(-0.06em);
+  width: 100%;
+}
+
+.prediction-carousel-button:hover,
+.prediction-carousel-button:focus {
+  border-color: #777;
+}
+
+@media screen and (max-width: 768px) {
+  .prediction-video-carousel {
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
+    gap: 0.5rem;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .prediction-panel-labels {
+    font-size: 0.75rem;
+    gap: 0.25rem;
+  }
+
+  .prediction-carousel-button {
+    font-size: 1.75rem;
+  }
+}
+
+.deployment-task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.deployment-task .title {
+  margin-bottom: 0.75rem;
+}
+
+.deployment-task video {
+  width: 100%;
+  border-radius: 6px;
+  background: #000;
+}
+
+@media screen and (max-width: 768px) {
+  .deployment-task-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .publication-title {
 }
