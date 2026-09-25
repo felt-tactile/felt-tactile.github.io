@@ -54,7 +54,7 @@
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video id="teaser" autoplay loop playsinline controls width="100%">
-        <source src="./static/videos/felt_video_web.mp4" type="video/mp4">
+        <source src="./static/videos/FELT_video_ICRA.mp4" type="video/mp4">
       </video>
     </div>
   </div>
@@ -83,23 +83,23 @@
         </figure>
         <div class="content has-text-justified">
           <p>
-            The sense of touch is central to manipulation, especially when vision is occluded or ambiguous. 
-            Although combining vision and touch improves manipulation, learning robust visuo-tactile policies 
-            requires substantial tactile data. Such data remains scarcer than visual data, because tactile sensors
-             are fragile, specialized, and hard to standardize. 
+            Tactile sensing can improve performance in contact-rich robot manipulation. 
+            However, learning policies that use real tactile feedback typically requires demonstrations collected with tactile-equipped hardware.
           </p>
           <p>
-            To address this, we present <u><b>F</b></u>eature-<u><b>E</b></u>xtracted <u><b>L</b></u>atent <u><b>T</b></u>actile 
-            (FELT), a learning-based framework that synthesizes per-finger pressure tactile images from RGB observations, 
-            reducing the need for tactile-equipped data collection. FELT uses a large frozen visual encoder and a 
-            lightweight query decoder to predict tactile signals in a single feed-forward pass. To respect the physical 
-            topology of dual-finger tactile sensors, FELT decodes the left and right tactile sensor panels through 
-            separate branches, capturing the asymmetric contact patterns during interactions such as wiping, insertion, 
-            and in-hand rotation. At inference time, FELT only requires RGB data, enabling it to retroactively 
-            augment vision-only data with tactile channels for visuo-tactile policy training and provide tactile signals 
-            online for robots without physical tactile sensors. Experiments on four contact-rich manipulation tasks 
-            demonstrate that FELT produces physically grounded tactile signals and improves downstream visuo-tactile 
-            policy success over vision-only baselines. 
+            We present <u><b>F</b></u>eature-<u><b>E</b></u>xtracted <u><b>L</b></u>atent <u><b>T</b></u>actile 
+            (FELT), a framework that uses existing paired visuo-tactile data to learn contact-aware representations from RGB observations. 
+            FELT provides these representations to downstream policies through two interfaces: generated tactile images and contact-aware features. 
+            FELT combines a frozen visual encoder with separate query decoders for the left and right finger, reflecting the spatial organization 
+            of dual-finger tactile arrays. The two branches exchange information through gated connections, and a convolutional readout produces 
+            spatial contact representations for the downstream interfaces. 
+          </p>
+          <p>
+            For downstream manipulation, the image interface decodes these spatial representations into tactile images, allowing policies trained 
+            with either real or generated tactile observations to use generated images at deployment. Alternatively, the feature interface feeds 
+            these representations directly to the policy during both training and deployment, without real tactile observations. 
+            Experiments on four contact-rich real-robot tasks show that both interfaces achieve higher success rates than vision-only policies. 
+            Directly incorporating learned contact-aware features into the policy improves success by 15-22.5 percentage points across the four tasks.
           </p>
         </div>
         
@@ -121,15 +121,14 @@
                alt="FELT tactile data generation framework with visual feature extraction, tactile query decoding, and panel-aware readout.">
           <figcaption class="content has-text-justified">
             <p>
-              Our tactile data generation framework. (a) Given fisheye RGB images,
-              our model extracts visual features with a frozen DINOv2 ViT. (b) The tactile query decoder
-              low pressure uses separate learnable, position-aware query embeddings for the left and right
-              finger sensors. Each branch attends to the visual features via cross-attention and exchanges
-              information via gated cross-panel connection. (c) A panel-aware convolutional readout head
-              maps the decoded queries to tactile features, with learned side embeddings to distinguish
-              the left and right sensors. The tactile features predict contact probability and pressure
-              intensity for each tactile grid. (d) These generated tactile signals and features can augment
-              real visuo-tactile demonstrations for downstream policy learning.
+              Overview of FELT's spatial, per-finger contact representation framework. 
+              (a) Given a fisheye RGB observation, FELT extracts visual features using a frozen, pretrained DINOv2 ViT. 
+              (b) Separate decoders for the left and right finger panels use learnable, position-aware queries aligned with each panel's spatial grid. 
+              Each branch attends to the visual features through cross-attention, while gated cross-panel connections enable information exchange between the two branches. 
+              (c) A panel-aware convolutional readout transforms the decoded queries into spatial contact features, 
+              with learned side embeddings to distinguish the left and right panels. 
+              Prediction heads map these features to per-cell contact probabilities and conditional contact intensities. 
+              (d) FELT provides two interfaces for downstream manipulation: generated tactile images and contact-aware features.
             </p>
           </figcaption>
         </figure>
